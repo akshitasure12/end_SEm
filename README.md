@@ -1,119 +1,92 @@
-# World Air Quality Index (AQI) Visualization
+# World Air Quality Index (AQI) 3D Visualization
 
-This project provides a **Python-based visualization** of global air quality using the **World Air Quality Index by City and Coordinates** dataset. The script is designed to run in **Google Colab** and enables both **global and regional visualizations** of AQI values.
-
----
-
-## 📂 Dataset
-
-The dataset is sourced from [Kaggle: World Air Quality Index by City and Coordinates](https://www.kaggle.com/datasets/adityaramachandran27/world-air-quality-index-by-city-and-coordinates). It contains:
-
-- **City Name**  
-- **Country**  
-- **Latitude (`lat`)** and **Longitude (`lon`)**  
-- **AQI (Air Quality Index)**  
-- Optional: additional columns such as measurements for PM2.5, PM10, etc.
-
-> **Note:** You need to download the CSV manually from Kaggle and upload it to Colab.
+This project is a **3D interactive web-based visualization** of global air quality using **HTML, CSS, and JavaScript**. Users can explore AQI levels city-wise on a 3D globe or flat map, with smooth interactions, animations, and color-coded markers.
 
 ---
 
-## ⚡ Features
+## Dataset
 
-1. **AQI Distribution Histogram**  
-   - Shows the frequency distribution of AQI values across all cities.
-   - Highlights areas with poor air quality.
+The visualization uses the **World Air Quality Index by City and Coordinates** dataset from Kaggle.
 
-2. **Global AQI Map**  
-   - Plots cities on a world map using **geospatial coordinates**.  
-   - Color-coded by AQI levels using a heatmap-style color scale.
+### Dataset Columns
 
-3. **Region-Specific Map & Analysis**  
-   - Focus on a specific geographic region (example: India).  
-   - Produces both histogram and map for cities within the region.
+| Column Name | Data Type | Description |
+|------------|-----------|-------------|
+| `City`     | String    | Name of the city |
+| `Country`  | String    | Country where the city is located |
+| `lat`      | Float     | Latitude coordinate of the city |
+| `lon`      | Float     | Longitude coordinate of the city |
+| `AQI`      | Integer   | Air Quality Index value (higher = worse air quality) |
+| `PM2.5`    | Float     | Particulate Matter 2.5 µm concentration (optional) |
+| `PM10`     | Float     | Particulate Matter 10 µm concentration (optional) |
 
-4. **Data Inspection**  
-   - Prints dataset overview, column names, missing values, and basic statistics.  
+### Example Data
 
----
-
-## 🛠 Technologies / Libraries Used
-
-- **Python 3**  
-- **pandas** – data manipulation  
-- **geopandas** – geospatial plotting  
-- **matplotlib** – static plotting  
-- **seaborn** – statistical plots (histograms, KDE)  
-- **contextily** – base maps (optional for tiles)  
-- **Google Colab** – cloud environment with file upload support  
+| City       | Country      | lat       | lon       | AQI  | PM2.5 | PM10 |
+|------------|-------------|-----------|-----------|------|-------|------|
+| London     | UK          | 51.5074   | -0.1278   | 42   | 12.5  | 25   |
+| New York   | USA         | 40.7128   | -74.0060  | 55   | 15.2  | 30   |
+| Delhi      | India       | 28.7041   | 77.1025   | 210  | 110.5 | 180  |
+| Beijing    | China       | 39.9042   | 116.4074  | 190  | 95.3  | 160  |
 
 ---
 
-## 🚀 How to Run in Google Colab
+## Features
 
-1. Open a new [Google Colab](https://colab.research.google.com/) notebook.
-2. Copy the provided script into a code cell.
-3. Run the cell. When prompted:
-   - Click **Choose Files** and upload your downloaded CSV.
-4. The script will automatically:
-   - Load and inspect the dataset  
-   - Display a histogram of AQI values  
-   - Show a global map with cities color-coded by AQI  
-   - Show a region-specific map (default: India)  
+1. **3D Globe / Map Visualization**  
+   - Cities plotted in **3D space** using geographic coordinates.  
+   - **Color-coded markers** represent AQI levels (green → low, red → high).  
 
----
+2. **Interactive Camera & Controls**  
+   - Orbit controls allow **rotation, zooming, and panning**.  
+   - Users can inspect specific regions dynamically.
 
-## 🗺 How It Works
+3. **Animation**  
+   - Smooth rotation of the globe (autorotate).  
+   - Optional **animated transitions** when filtering or highlighting cities.
 
-1. **Data Loading**  
-   - The CSV is read using `pandas.read_csv`.
-   - Basic inspection shows missing values and data types.
-
-2. **Visualization**  
-   - **Histogram**: Using `seaborn.histplot` to visualize AQI distribution.
-   - **World Map**:
-     - Convert city coordinates to a GeoDataFrame using `geopandas`.
-     - Plot using `matplotlib` with a color gradient for AQI levels.
-   - **Region Map**:
-     - Filter cities within a bounding box (longitude & latitude limits).
-     - Plot similar to global map but zoomed in.
-
-3. **Color-Coding**  
-   - Low AQI → Better air quality (cool colors).  
-   - High AQI → Poor air quality (warm colors).
+4. **Responsive Design**  
+   - Adjusts to different screen sizes.  
+   - Supports high-resolution displays with proper scaling.
 
 ---
 
-## ✨ Customization
+## Computer Graphics Concepts Used
 
-- Change **region bounding box** to focus on any country or city.
-- Adjust **colormap** in plots (`cmap="viridis"`, `"coolwarm"`, etc.).
-- Increase **marker size** for better visibility.
-- Add **interactive maps** using `plotly` or `folium` for advanced visualization.
-- Filter by **AQI ranges** or **specific pollutants** if columns exist.
-
----
-
-## 📌 Notes
-
-- Ensure CSV column names match those expected in the script (`lat`, `lon`, `AQI`).  
-- Missing or null values are automatically ignored in visualizations.  
-- For persistent storage, you can **mount Google Drive** and read/write CSV files directly.  
+| Concept                   | How Used in Project                                  |
+|----------------------------|-----------------------------------------------------|
+| 3D Coordinate System       | Mapping lat/lon to 3D Cartesian coordinates on a sphere |
+| Transformations            | Translation, rotation, scaling of markers and globe |
+| Projection                 | Perspective projection with Three.js `PerspectiveCamera` |
+| Lighting & Shading         | Ambient and directional lights, color-coded AQI markers |
+| Animation                  | Globe rotation (autorotate) and smooth transitions |
+| Interaction                | OrbitControls for rotation, zoom, and panning |
+| Rendering Pipeline         | WebGL rasterization, depth testing, and blending |
+| Color Mapping              | AQI values mapped to color gradient for visual encoding |
 
 ---
 
-## 📚 References
+## Technologies / Libraries
 
-- Kaggle Dataset: [World Air Quality Index by City and Coordinates](https://www.kaggle.com/datasets/adityaramachandran27/world-air-quality-index-by-city-and-coordinates)
-- GeoPandas Documentation: [https://geopandas.org](https://geopandas.org)
-- Seaborn Documentation: [https://seaborn.pydata.org](https://seaborn.pydata.org)
-
----
-
-## ✅ License
-
-This project is for **educational and research purposes**.  
-Dataset usage follows Kaggle’s terms of use.
+| Technology / Library | Purpose |
+|---------------------|---------|
+| HTML5 & CSS3        | Structure and styling of the page |
+| JavaScript (ES6)    | Logic, data parsing, and interactions |
+| Three.js             | 3D rendering and scene management |
+| OrbitControls.js    | Camera manipulation and user input |
+| d3.js / PapaParse   | Optional: parsing CSV and color scaling |
 
 ---
 
+## How to Run
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/aqi-3d-visualization.git
+cd aqi-3d-visualization
+```
+2. For local testing:
+```bash
+python -m http.server 8000
+# Open: http://localhost:8000
+```
