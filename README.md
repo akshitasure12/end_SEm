@@ -4,6 +4,14 @@ This project is a **3D interactive web-based visualization** of global air quali
 
 ---
 
+## Visualisations
+
+<img width="1098" height="525" alt="image" src="https://github.com/user-attachments/assets/b3bcd70b-ea58-4267-ae8b-876f770b2859" />
+
+<img width="859" height="547" alt="image" src="https://github.com/user-attachments/assets/d3f7de51-5256-4915-8047-4de2893c5db4" />
+
+<img width="989" height="590" alt="image" src="https://github.com/user-attachments/assets/9b99144a-2532-4625-a336-19ba46df9489" />
+
 ## Dataset
 
 The visualization uses the **World Air Quality Index by City and Coordinates** dataset from Kaggle.
